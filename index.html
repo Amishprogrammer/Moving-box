@@ -51,11 +51,10 @@
     let distanceX = e.clientX - boxCenterX;
     let distanceY = e.clientY - boxCenterY;
     let maxDistance = Math.max(Math.abs(distanceX), Math.abs(distanceY));
-    if (maxDistance < 150) { // 150 is the minimum distance from the box to the cursor
+    if (maxDistance < 150) { 
       let newLeft = box.offsetLeft;
       let newTop = box.offsetTop;
-      let moveDistance = 200; // Default move distance
-      // Increase the move distance if the box is near the edge of the screen
+      let moveDistance = 200;
       if (newLeft < 100 || newLeft > window.innerWidth - 100 || newTop < 100 || newTop > window.innerHeight - 100) {
         moveDistance = 200;
       }
@@ -65,7 +64,6 @@
       if (distanceY !== 0) {
         newTop -= moveDistance * (distanceY / Math.abs(distanceY));
       }
-      // Ensure the box doesn't move too far away (more than 200px)
       if (Math.abs(window.innerWidth / 2 - newLeft) > 200) {
         newLeft = window.innerWidth / 2 + 200 * (newLeft < window.innerWidth / 2 ? -1 : 1);
       }
