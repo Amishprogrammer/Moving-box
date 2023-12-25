@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body{
+      background-color: deeppink;
+    }
+    .mid{
+      text-align: center;
+      position: static;
+      height: 100%;
+      width: 
+      background-color: deeppink;
+    }
+    .box {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: hotpink;
+      transition: all 0.5s ease;
+      border-radius: 20%;
+    }
+    .yesbox {
+      position: absolute;
+      left: 30%;
+      top: 50%;
+      width: 50px;
+      height: 50px;
+      background-color: lightskyblue;
+      transition: all 0.5s ease;
+      border-radius: 20%;
+    }
+  </style>
+</head>
+<body>
+<div class="mid">
+  Hey, do you like me???
+  <div class="box" id="box">NO</div>
+  <div class ="yesbox">YES</div>
+</div>
+<script>
+  let box = document.getElementById('box');
+  // Position the box in the middle of the screen initially
+  box.style.left = '70%';
+  box.style.top = '50%';
+
+  document.addEventListener('mousemove', function(e) {
+    let boxRect = box.getBoundingClientRect();
+    let boxCenterX = boxRect.left + boxRect.width / 2;
+    let boxCenterY = boxRect.top + boxRect.height / 2;
+    let distanceX = e.clientX - boxCenterX;
+    let distanceY = e.clientY - boxCenterY;
+    let maxDistance = Math.max(Math.abs(distanceX), Math.abs(distanceY));
+    if (maxDistance < 150) { // 150 is the minimum distance from the box to the cursor
+      let newLeft = box.offsetLeft;
+      let newTop = box.offsetTop;
+      let moveDistance = 200; // Default move distance
+      // Increase the move distance if the box is near the edge of the screen
+      if (newLeft < 100 || newLeft > window.innerWidth - 100 || newTop < 100 || newTop > window.innerHeight - 100) {
+        moveDistance = 200;
+      }
+      if (distanceX !== 0) {
+        newLeft -= moveDistance * (distanceX / Math.abs(distanceX));
+      }
+      if (distanceY !== 0) {
+        newTop -= moveDistance * (distanceY / Math.abs(distanceY));
+      }
+      // Ensure the box doesn't move too far away (more than 200px)
+      if (Math.abs(window.innerWidth / 2 - newLeft) > 200) {
+        newLeft = window.innerWidth / 2 + 200 * (newLeft < window.innerWidth / 2 ? -1 : 1);
+      }
+      if (Math.abs(window.innerHeight / 2 - newTop) > 200) {
+        newTop = window.innerHeight / 2 + 200 * (newTop < window.innerHeight / 2 ? -1 : 1);
+      }
+      box.style.left = newLeft + 'px';
+      box.style.top = newTop + 'px';
+    }
+  });
+</script>
+
+</body>
+</html>
